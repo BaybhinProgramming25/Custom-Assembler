@@ -1,0 +1,16 @@
+Q1) What is the name of the attack that is possible when user-input is used directly in SQL queries without any sanitization or other countermeasures?
+
+The name of the attack such that when user-input is put into SQL queries without sanitizaition or other countermeasures is called SQL injection. This is essentially when an attacker injects malicious SQL statements into entries field in order to execute such malicious statements and potentially disruipt the CIA (Confidentiality, Integrity, Availability) of databases.
+
+Q2) Abusing this vulnerability, provide the username and password that an attacker can use to login as any user, without knowing that user’s password. (You can find the login-related query in login.php)
+
+A potential username input that an attacker could use to access as any user would be 
+'OR 1=1 UNION SELECT uname, pwd FROM users. In this line of code, no matter what is put in the username field, the string will be delimited and thus 1=1 will be computated as true, this creating a False OR True conditional which evaulates to true. This will then execute the UNION operator that can be used to extract the username and password from the database. 
+
+A similar technique can be used for the password field by delimiting the input and performing logical OR with a value that always yields a truthy result (i.e 'a' = 'a). Thus, a possible SQL Injection code for the password field would look like: 'OR'a'='a
+
+Q3) What does fail2ban do? How does it interact with iptables?
+
+fail2ban is essentially a security software that is used to protect servers from brute-force attacks and password-guessers by notating potentially malicious acitvity such as failed login attempts within a specific window of time. Once a certain amount of attempts has been reached, fail2ban will essentially kickstart and ban the IP address from trying to connect to the server for a specified amount of time. 
+
+In terms of iptables, because fail2ban is integreated with the linux firewall iptables, it essentially will interact with iptables by adding rules to the firewall. fail2ban will keep on listening for possibly malicious activity, then actively responding by dynamically adding to the iptables the offending IP address.
