@@ -4,10 +4,9 @@ The name of the attack such that when user-input is put into SQL queries without
 
 Q2) Abusing this vulnerability, provide the username and password that an attacker can use to login as any user, without knowing that user’s password. (You can find the login-related query in login.php)
 
-A potential username input that an attacker could use to access as any user would be 
-'OR 1=1 UNION SELECT uname, pwd FROM users. In this line of code, no matter what is put in the username field, the string will be delimited and thus 1=1 will be computated as true, this creating a False OR True conditional which evaulates to true. This will then execute the UNION operator that can be used to extract the username and password from the database. 
+For an attacker to first get a username and password, they would first need to extract a username and password. Even before that, they would have to retrieve the column names of where the username and password is stored. An attacker can do this using the following SQL statement: 'OR 1=1 UNION SELECT col_name FROM information_schema.columns WHERE table_name = 'users'. This will retrieve all the column names. From here, an attacker could then use the column names to extract the data stored in them like so: 'OR 1=1 UNION SELECT col_name FROM users. This would retrieve all the username data from the database 
 
-A similar technique can be used for the password field by delimiting the input and performing logical OR with a value that always yields a truthy result (i.e 'a' = 'a). Thus, a possible SQL Injection code for the password field would look like: 'OR'a'='a
+Finally, once an attacker has a username that they received from their previous SQL injection, they can then perform SQL injection in the password field, such that to force the password field to always produce a truthy value. An example SQL injection would be: a'OR'a'='a, as this will essentially perform logical OR between the user inputted data and the attacker's a=a injection.
 
 Q3) What does fail2ban do? How does it interact with iptables?
 
