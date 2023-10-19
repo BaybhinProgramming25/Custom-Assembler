@@ -4,6 +4,7 @@ The custom assembler is a 32-bit architecture, with 14 general purpose registers
 
 Each instruction is going to be 3 bytes (24 bits) long, as these instructions are going to be stored in MSB format.
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 14 different opcodes are supported for this architecture, which are the following:
 
 LD: Load Instruction (Ex: LD R1 Immediate)
@@ -34,7 +35,7 @@ CALL: Call Instruction (Ex: CALL Address)
 
 RET: Return Instruction (Ex: RET) 
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 How to run the program:
 
 1) Go to the input folder. This is where you can type out which of the 14 instructions you want to run per line
